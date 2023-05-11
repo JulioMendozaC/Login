@@ -5,42 +5,19 @@ import Logo from "../assets/react.svg";
 
 const Login = () => {
 
-const [ nameDate, setNameDate] = useState({
-	identifier:"",
-	password: ""
-})
-// const [ passDate, setPassDate] = useState([])
-
-
-const manejarDatos = (e) =>{
-
-	const value= e.target.value 
-
-	setNameDate({
-		...nameDate,
-		[e.target.identifier] : value,
-		[e.target.password] : value,
-	})
-	
-
-	
-}
-
-
-
 const  manejoSubmit = (e) =>{
 	e.preventDefault();
 
-	const userData ={
-		identifier: nameDate.identifier,
-		password: nameDate.password
-	}
-	axios.post("http://192.168.0.34:1337/api/auth/local", userData)
-	.then((response) =>{console.log(response.status, response.data)})
+	axios
+      .post("http://192.168.0.34:1337/api/auth/local", { identifier, password })
+      .then(response => {
+        console.log(response)
+      })
 
 }
 
-
+const [ identifier, setIdentifier] = useState()
+const [ password, setPassword] = useState()
 
 
   
@@ -56,14 +33,17 @@ const  manejoSubmit = (e) =>{
 						className="fadeIn second"
 						name="identifier"
 						placeholder="Username or email"
-            onChange={manejarDatos}
+						value={identifier}
+						onChange={e => setIdentifier(e.target.value)}
+						
 					/>
 					<input
 						type="password"
 						className="fadeIn third"
 						name="password"
 						placeholder="password"
-            onChange={manejarDatos}
+						value={password}
+						onChange={e => setPassword(e.target.value)}
 					/>
 					<input
 						type="submit"
